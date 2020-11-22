@@ -3,6 +3,11 @@ import React from "react"
 function MemeApp(props) {
     return (
         <div className="memeApp">
+            <div className="memeRender">
+                <img src={props.state.memeImg} alt="Meme"/>
+                <h2 className="top">{props.state.topText}</h2>
+                <h2 className="bottom">{props.state.bottomText}</h2>
+            </div>
             <form onSubmit={props.handleSubmit}>
                 <input type="text"
                     name="topText"
@@ -18,11 +23,6 @@ function MemeApp(props) {
                 />
                 <button>New Meme</button>
             </form>
-            <div className="meme-render">
-                <img src={props.state.memeImg} />
-                <div class="toptext">{props.state.topText}</div>
-                <div class="bottomtext">{props.state.bottomText}</div>
-            </div>
         </div>
     )
 }
