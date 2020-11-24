@@ -1,64 +1,63 @@
-import React, {Component} from "react"
+import React, {useEffect, useState} from "react"
 import MemeApp from "./MemeApp"
 
-class MemeGenerator extends Component {
-    constructor() {
-        super()
-        this.state = {
-            loading: false,
-            topText: "",
-            bottomText: "",
-            memeImg: "",
-            memeAPI: []
-        }
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
-    }
+function MemeGenerator() {
 
-    componentDidMount() {
-        this.setState({ loading: true })
+    const [state, setState] = useState({
+        loading: false,
+        topText: "",
+        bottomText: "",
+        memeImg: "",
+        memeAPI: []
+    })
+
+    useEffect(() => {
+        setState({ loading: true })
         const API = "https://api.imgflip.com/get_memes"
+
         fetch(API)
         .then(response => response.json())
         .then(response => {
             const {memes} = response.data
-            this.setState({
+            setState({
                 loading: false,
-                memeAPI: memes,
-                memeImg: memes[Math.floor(Math.random() * memes.length)].url
+                memeImg: memes[Math.floor(Math.random() * memes.length)].url,
+                memeAPI: memes
             })
         })
-    }
 
-    handleChange(event) {
-        const {name, value} = event.target;
-        this.setState({
+    }, [])
+
+    const handleChange = (event) => {
+        const {name, value} = event.target
+        setState({
+            ...state,
             [name]: value
         })
     }
 
-    handleSubmit(event) {
-        const RAND_MEME = this.state.memeAPI[Math.floor(Math.random() * this.state.memeAPI.length)].url
-        this.setState({
+    const handleSubmit = (event) => {
+        const RAND_MEME = state.memeAPI[Math.floor(Math.random() * state.memeAPI.length)].url
+        setState({
+            ...state,
             memeImg: RAND_MEME
         })
         event.preventDefault()
     }
 
-    render() {
-        return (
-            <>{this.state.loading ?
-                <h2>Loading...</h2> :
-                <main>
-                    <MemeApp
-                        handleSubmit={this.handleSubmit}
-                        handleChange={this.handleChange}
-                        state={this.state}
-                    />
-                </main>
-            }</>
-        )
-    }
+    return (
+        <>{state.loading ?
+            <h2>Loading...</h2> :
+            <main>
+                <MemeApp
+                    handleSubmit={handleSubmit}
+                    handleChange={handleChange}
+                    state={state}
+                />
+            </main>
+        }</>
+    )
+
 }
 
 export default MemeGenerator
