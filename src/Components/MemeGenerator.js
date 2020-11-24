@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useRef, useState} from "react"
 import MemeApp from "./MemeApp"
+import { exportComponentAsJPEG, exportComponentAsPDF, exportComponentAsPNG } from 'react-component-export-image'
 
 function MemeGenerator() {
 
@@ -45,6 +46,12 @@ function MemeGenerator() {
         event.preventDefault()
     }
 
+    const handleDownload = (event) => {
+        exportComponentAsJPEG(componentRef)
+    }
+
+    const componentRef = useRef()
+
     return (
         <>{state.loading ?
             <h2>Loading...</h2> :
@@ -52,7 +59,9 @@ function MemeGenerator() {
                 <MemeApp
                     handleSubmit={handleSubmit}
                     handleChange={handleChange}
+                    handleDownload={handleDownload}
                     state={state}
+                    ref={componentRef}
                 />
             </main>
         }</>

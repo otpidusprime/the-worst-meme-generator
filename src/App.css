@@ -81,7 +81,7 @@ main .memeApp .memeRender .top {
 main .memeApp form {
    box-sizing: border-box;
    max-width: calc(85%);
-   margin: 40px auto 50px;
+   margin: 40px auto 0;
 }
 
 main .memeApp form * {
@@ -98,7 +98,8 @@ main .memeApp form input {
     text-transform: uppercase;
 }
 
-main .memeApp form button {
+main .memeApp form button,
+.downloadSection button {
    width: 100%;
    text-align: center;
    outline: none;
@@ -108,4 +109,18 @@ main .memeApp form button {
     font-size: 1.25rem;
     padding: 10px 0;
     cursor: pointer;
+    border-radius: 6px;
+}
+
+.downloadSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px auto 30px;
+    max-width: 85%;
+}
+
+.downloadSection p {
+    text-align: center;
+    font: normal 500 18px sans-serif;
 }
